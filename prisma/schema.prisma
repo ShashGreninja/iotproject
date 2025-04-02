@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SensorType {
+  TEMPERATURE
+  HUMIDITY
+  WIND_SPEED
+}
+
+model Sensor {
+  id       Int       @id @default(autoincrement())
+  type     SensorType
+  location String
+  unit     String
+
+  humidityReadings    HumidityReading[]
+  temperatureReadings TemperatureReading[]
+  windSpeedReadings   WindSpeedReading[]
+
+  @@unique([type, location])  // Ensures no duplicate sensors per location
+}
+
+model TemperatureReading {
+  id        Int      @id @default(autoincrement())
+  sensorId  Int
+  value     Decimal @db.Decimal(5,2)
+  timestamp DateTime @default(now())
+
+  sensor    Sensor   @relation(fields: [sensorId], references: [id], onDelete: Cascade)
+
+  @@index([timestamp])
+}
+
+model HumidityReading {
+  id        Int      @id @default(autoincrement())
+  sensorId  Int
+  value     Decimal @db.Decimal(5,2)
+  timestamp DateTime @default(now())
+
+  sensor    Sensor   @relation(fields: [sensorId], references: [id], onDelete: Cascade)
+
+  @@index([timestamp])
+}
+
+model WindSpeedReading {
+  id        Int      @id @default(autoincrement())
+  sensorId  Int
+  value     Decimal @db.Decimal(5,2)
+  timestamp DateTime @default(now())
+
+  sensor    Sensor   @relation(fields: [sensorId], references: [id], onDelete: Cascade)
+
+  @@index([timestamp])
+}
