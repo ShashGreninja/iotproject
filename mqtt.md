@@ -51,3 +51,4 @@ MESSAGE PAYLOAD: the actual content of the message(can be text, JSON, binary, et
 LAST WILL & TESTAMENT(LWT): a message set by a client that gets published if it unexpectedly disconnects, used to notify other clients about a failure. 
 RETAINED MESSAGES: the broker stores the last message sent on a topic so new subscriber immediately receives the latest update when they subscribe.
 
+Future scope : We may use publicly available more realistic datasets from public sources like Kaggle (machine learning community) https://www.kaggle.com/datasets/garystafford/environmental-sensor-data-132k/data contains temperature. light, humidity, smoke, light, CO emissions, etc. Currently we are generating readings from December 31st 2024 to April 9th 2025 on our won accord.
