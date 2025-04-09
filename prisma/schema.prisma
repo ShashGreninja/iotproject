@@ -30,31 +30,34 @@ model TemperatureReading {
   id        Int      @id @default(autoincrement())
   sensorId  Int
   value     Decimal @db.Decimal(5,2)
-  timestamp DateTime @default(now())
+  date      DateTime @default(now())
+  time      DateTime @default(now())
 
   sensor    Sensor   @relation(fields: [sensorId], references: [id], onDelete: Cascade)
 
-  @@index([timestamp])
+  @@index([date, time])
 }
 
 model HumidityReading {
   id        Int      @id @default(autoincrement())
   sensorId  Int
   value     Decimal @db.Decimal(5,2)
-  timestamp DateTime @default(now())
+  date      DateTime @default(now())
+  time      DateTime @default(now())
 
   sensor    Sensor   @relation(fields: [sensorId], references: [id], onDelete: Cascade)
 
-  @@index([timestamp])
+  @@index([date, time])
 }
 
 model WindSpeedReading {
   id        Int      @id @default(autoincrement())
   sensorId  Int
   value     Decimal @db.Decimal(5,2)
-  timestamp DateTime @default(now())
+  date      DateTime @default(now())
+  time      DateTime @default(now())
 
   sensor    Sensor   @relation(fields: [sensorId], references: [id], onDelete: Cascade)
 
-  @@index([timestamp])
+  @@index([date, time])
 }

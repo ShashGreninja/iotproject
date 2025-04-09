@@ -23,11 +23,15 @@ async function main() {
   function generateReadings(sensorId, min, max) {
     const now = new Date();
     return Array.from({ length: 100 }, (_, i) => {
-      const timestamp = new Date(now.getTime() - i * 24 * 60 * 60 * 1000); // Each reading 1 day apart
+      const readingDateTime = new Date(now.getTime() - i * 24 * 60 * 60 * 1000); // Each reading 1 day apart
+      const date = new Date(readingDateTime.toISOString().split('T')[0]); // Extract only the date part
+      const time = new Date(date); // Use the same date as `date` but retain the time
+      time.setHours(readingDateTime.getHours(), readingDateTime.getMinutes(), readingDateTime.getSeconds(), readingDateTime.getMilliseconds());
       return {
         sensorId,
         value: parseFloat((Math.random() * (max - min) + min).toFixed(2)),
-        timestamp,
+        date, // Properly formatted date
+        time, // Properly formatted time with the same date
       };
     });
   }
