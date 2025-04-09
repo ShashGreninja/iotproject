@@ -9,9 +9,9 @@ async function main() {
 
   // Creating sensors
   const createdSensors = await prisma.$transaction([
-    prisma.sensor.create({ data: { type: 'TEMPERATURE', location: 'New York', unit: '°C' } }),
-    prisma.sensor.create({ data: { type: 'HUMIDITY', location: 'Los Angeles', unit: '%' } }),
-    prisma.sensor.create({ data: { type: 'WIND_SPEED', location: 'Chicago', unit: 'm/s' } }),
+    prisma.sensor.create({ data: { type: 'TEMPERATURE', location: 'Delhi', unit: '°C' } }),
+    prisma.sensor.create({ data: { type: 'HUMIDITY', location: 'Patna', unit: '%' } }),
+    prisma.sensor.create({ data: { type: 'WIND_SPEED', location: 'Kolkata', unit: 'm/s' } }),
   ]);
 
   // Extract sensor IDs
@@ -21,11 +21,15 @@ async function main() {
 
   // Generate random readings
   function generateReadings(sensorId, min, max) {
-    return Array.from({ length: 100 }, (_, i) => ({
-      sensorId,
-      value: parseFloat((Math.random() * (max - min) + min).toFixed(2)),
-      timestamp: new Date(Date.now() - i * 3600 * 1000),
-    }));
+    const now = new Date();
+    return Array.from({ length: 100 }, (_, i) => {
+      const timestamp = new Date(now.getTime() - i * 24 * 60 * 60 * 1000); // Each reading 1 day apart
+      return {
+        sensorId,
+        value: parseFloat((Math.random() * (max - min) + min).toFixed(2)),
+        timestamp,
+      };
+    });
   }
 
   // Add readings
